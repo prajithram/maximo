@@ -1,0 +1,123 @@
+
+Maximo Silent Installation.
+@author Prajith
+==================================ls -la
+
+
+home/maxadmin/IBM/InstallationManager/eclipse/tools/imcl -acceptLicense -accessRights nonAdmin -input /mnt/middleware/Maximo/MAMMTFP7612IMRepo/_CDS/MAMMTFP7612IMRepo.install.xml -log /tmp/MAMMTFP7612IMRepo.install.log
+
+
+ -acceptLicense -accessRights nonAdmin -input /maximo/Extracted/Maximo7.6.2/Installs/MAMMTFP7612IMRepo/rpresponsefile.xml -log /tmp/MAMMTFP7612IMRepo.install.log
+
+sanple response xml
+ <?xml version='1.0' encoding='UTF-8'?>
+<agent-input>
+  <server>
+    <repository location='/home/maxadmin/MAMMTFP7612IMRepo/repository.config'/>
+    <repository location='/home/maxadmin/MAMMTFP7612IMRepo/TPAE_7612_IFIX.20210223-1245.im.zip'/>
+    <repository location='/home/maxadmin/MAMMTFP7612IMRepo/MIF_7612_IFIX.20201202-1523.im.zip'/>
+  </server>
+  <profile id='IBM   Tivoli&apos;s process automation suite' installLocation='/home/maxadmin/IBM/SMP'>
+  </profile>
+  <install modify='false'>
+    <!-- IBM   Maximo Asset Management 7.6.1.2 -->
+   <offering profile='IBM   Tivoli&apos;s process automation suite' id='com.ibm.tivoli.tpae.base.tpae.main' features='TPAEWin32bitSupport.feature,main.feature' installFixes='all'/>
+   <offering profile='IBM   Tivoli&apos;s process automation suite' id='com.ibm.tivoli.tpae.base.mam.main' features='main.feature' installFixes='all'/>
+  </install>
+</agent-input>
+ 
+
+Steps
+===========
+
+Maximo 7.6.1.2  Silent Install
+
+Create the responsexml ->rpresponsefile.xml
+
+ <?xml version='1.0' encoding='UTF-8'?>
+<agent-input>
+  <server>
+    <repository location='/maximo/Extracted/Maximo7.6.2/Installs/MAMMTFP7612IMRepo/repository.config'/>
+  </server>
+  <profile id='IBM   Tivoli&apos;s process automation suite' installLocation='/home/maxadmin/IBM/SMP'>
+  </profile>
+  <install modify='false'>
+    <!-- IBM   Maximo Asset Management 7.6.1.2 -->
+   <offering profile='IBM   Tivoli&apos;s process automation suite' id='com.ibm.tivoli.tpae.base.tpae.main' features='TPAEWin32bitSupport.feature,main.feature' installFixes='all'/>
+   <offering profile='IBM   Tivoli&apos;s process automation suite' id='com.ibm.tivoli.tpae.base.mam.main' features='main.feature' installFixes='all'/>
+  </install>
+</agent-input>
+
+Run commandd
+ 
+ ./imcl -acceptLicense -accessRights Admin -input /maximo/Extracted/Maximo7.6.2/Installs/MAMMTFP7612IMRepo/rpresponsefile.xml -log /tmp/MAMMTFP7612IMRepo.install.log
+
+
+./imcl listInstalledPackages -long
+
+
+ if it throw the error regarding installaiton manager installed by another user or something.
+
+ check -> /etc/.ibm/registry/InstallationManager.dat exists
+ 
+copy it to ~//etc/.ibm/registry/InstallationManager.dat (to the home directory of the user running the command)
+
+
+==========
+Maximo 7.6.2 Nuclear Install
+
+
+ <?xml version='1.0' encoding='UTF-8'?>
+<agent-input>
+  <server>
+    <repository location='/maximo/Extracted/Maximo7.6.2/Installs/MAX_NUCLEAR_POWER_7.6.2/NuclearInstallerRepository.zip'/>
+  </server>
+  <profile id='IBM   Tivoli&apos;s process automation suite' installLocation='/home/maxadmin/IBM/SMP'>
+  </profile>
+  <install modify='false'>
+    <!-- IBM   Maximo Asset Management 7.6.1.2 -->
+   <offering profile='IBM   Tivoli&apos;s process automation suite' id='com.ibm.tivoli.tpae.base.tpae.main' features='TPAEWin32bitSupport.feature,main.feature' installFixes='all'/>
+  <offering profile='IBM   Tivoli&apos;s process automation suite' id='com.ibm.tivoli.tpae.IS.Nuclear' features='main.feature' installFixes='none'/>
+  </install>
+</agent-input>
+
+
+./imcl -acceptLicense -accessRights Admin -input /maximo/Extracted/Maximo7.6.2/Installs/MAX_NUCLEAR_POWER_7.6.2/rpresponsefile.xml -log /tmp/MAMMTFP7612IMRepo.install.log
+
+
+
+==========
+Maximo scheduler 7.6.2
+
+
+<?xml version='1.0' encoding='UTF-8'?>
+<agent-input>
+  <server>
+    <repository location='/maximo/Extracted/Maximo7.6.2/Installs/MAM_Scheduler_7.6.8/SchedulerInstallerRepository.zip'/>
+  </server>
+  <profile id='IBM   Tivoli&apos;s process automation suite' installLocation='/home/maxadmin/IBM/SMP'>
+  </profile>
+  <install modify='false'>
+  <!-- IBM Maximo Asset Management Scheduler 7.6.8-->
+   <offering profile='IBM   Tivoli&apos;s process automation suite' id='com.ibm.tivoli.tpae.base.tpae.main' features='TPAEWin32bitSupport.feature,main.feature' installFixes='all'/>
+  <offering profile='IBM   Tivoli&apos;s process automation suite' id='com.ibm.tivoli.tpae.IS.Scheduler' features='main.feature' installFixes='none'/>
+  </install>
+</agent-input>
+
+
+./imcl listInstalledPackages -long
+
+./imcl -acceptLicense -accessRights Admin -input /maximo/Extracted/Maximo7.6.2/Installs/MAM_Scheduler_7.6.8/rpresponsefile.xml -log /tmp/MAMMTFP7612IMRepo.install.log
+
+
+
+=========
+
+
+Run updatedb.sh
+
+
+buldear and redeploy
+
+
+
